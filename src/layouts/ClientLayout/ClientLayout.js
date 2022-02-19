@@ -1,10 +1,13 @@
 import React from 'react'
 import "./ClientLayout.scss"
 
-export function ClientLayout() {
+export function ClientLayout( props ) {
+    const { children } = props;
     return (
         <div>
             <p>Client Layout</p>
+
+            { children }
         </div>
     )
 }
