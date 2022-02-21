@@ -8,18 +8,38 @@ export function UsersAdmin() {
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState(null);
     const [contentModal, setContentModal] = useState(null);
-    const { loading, users, getUsers } = useUser();
+    const [refetch, setRefetch] = useState(false);
+    const { loading, users, getUsers, deleteUser } = useUser();
 
-    useEffect(() => getUsers(), [])
+    useEffect(() => getUsers(), [refetch]);
     
     const openCloseModal = () => setShowModal( (prevState) => !prevState);
+    const onRefetch = () => setRefetch((prev) => !prev);
 
     const addUser = () => {
         setTitleModal("Nuevo usuario");
-        setContentModal(<AddEditUserForm />);
+        setContentModal(<AddEditUserForm onClose={openCloseModal} onRefetch={onRefetch} />);
+        openCloseModal();
+    };
+
+    const updateUser = (data) => {
+        setTitleModal("Actualizar usuario");
+        setContentModal(<AddEditUserForm onClose={openCloseModal} onRefetch={onRefetch} user={data} />);
         openCloseModal();
     }
 
+    const onDeleteUser = async (data) => {
+        const result = window.confirm(`¿Eliminar usuario ${data.email}?`);
+        if (result) {
+            try {
+                await deleteUser(data.id);
+                onRefetch();
+                
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }; 
 
     return (
         <>
@@ -33,7 +53,7 @@ export function UsersAdmin() {
                     Cargando...
                 </Loader>
             ) : (
-                <TableUsers users={users} />
+                <TableUsers users={users} updateUser={updateUser} onDeleteUser={onDeleteUser} />
                 
             )}
 

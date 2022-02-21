@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getMeApi, getUserApi, addUserApi } from "../api/user";
+import { getMeApi, getUserApi, addUserApi, updateUserApi, deleteUserApi } from "../api/user";
 import { useAuth } from ".";
 
 
@@ -8,8 +8,6 @@ export function useUser() {
     const [error, setError] = useState(null);
     const [users, setUsers] = useState(null);
     const { auth } = useAuth();
-
-
 
     const getMe = async (token) => {
         try {
@@ -42,6 +40,30 @@ export function useUser() {
             setLoading(false);
             setError(error);
         }
+    };
+
+    const updateUser = async (id, data) => {
+        try {
+            setLoading(true);
+            await updateUserApi(id, data, auth.token);
+            setLoading(false);
+            
+        } catch (error) {
+            setLoading(false);
+            setError(error);
+        }
+    }
+
+    const deleteUser = async (id) => {
+        try {
+            setLoading(true);
+            await deleteUserApi(id, auth.token);
+            setLoading(false);
+            
+        } catch (error) {
+            setLoading(false);
+            setError(error);
+        }
     }
 
     return {
@@ -51,5 +73,7 @@ export function useUser() {
         getMe,
         getUsers,
         addUser,
+        updateUser,
+        deleteUser,
     }
 }
