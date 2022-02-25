@@ -1,0 +1,23 @@
+.table-product-admin {
+  td {
+    .ui.image {
+      width: auto;
+      height: 80px;
+      //   border-radius: 10px;
+      //   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+      //   -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+      //   -moz-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    &.status {
+      .icon {
+        &.close {
+          color: #f00;
+        }
+        &.check {
+          color: #008000;
+        }
+      }
+    }
+  }
+}

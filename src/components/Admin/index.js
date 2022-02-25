@@ -5,5 +5,6 @@ export * from "./HeaderPage";
 
 //carpetas con mas de 1 componente
 export * from "./Users";
-export * from "./Category"
+export * from "./Category";
+export * from "./Product";
 ;
