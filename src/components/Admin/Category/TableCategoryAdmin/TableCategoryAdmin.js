@@ -37,7 +37,7 @@ export function TableCategoryAdmin(props) {
 }
 
 function Actions (props) {
-    const { category } = props;
+    const { category, updateCategory, deleteCategory } = props;
 
     return (
         <Table.Cell textAlign="right">

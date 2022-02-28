@@ -7,28 +7,26 @@ import { useCategory } from "../../../../hooks";
 import "./AddEditCategoryForm.scss";
 
 export function AddEditCategoryForm(props) {
-    const { onClose, onRefetch } = props;
-
-    const [previewImage, setPreviewImage] = useState(null);
-    const { addCategory } = useCategory();
+    const { onClose, onRefetch, category } = props;
+    const [previewImage, setPreviewImage] = useState(category?.image || null);
+    const { addCategory, updateCategory } = useCategory();
 
     const formik = useFormik({
-        initialValues: initialValues(),
-        validationSchema: Yup.object(newSchema()),
+        initialValues: initialValues(category),
+        validationSchema: Yup.object(category ? updateSchema() : newSchema()),
         validateOnChange: false,
         onSubmit: async (formValue) => {
-            try {
-                await addCategory(formValue);
-                onRefetch();
-                onClose();
-            
-            } catch (error) {
-                console.error(error);
-            }
+        try {
+            if (category) await updateCategory(category.id, formValue);
+            else await addCategory(formValue);
 
-
+            onRefetch();
+            onClose();
+        } catch (error) {
+            console.error(error);
+        }
         },
-    })
+    });
 
     const onDrop = useCallback(async (acceptedFile) => {
         const file = acceptedFile[0];
@@ -61,23 +59,28 @@ export function AddEditCategoryForm(props) {
                  fluid {...getRootProps()}
                  color={formik.errors.image && "red"}
             >
-                Subir imagen
+                {previewImage ? "Cambiar imagen" : "Subir imagen"}
             </Button>
 
             <input {...getInputProps()}/>
             <Image src={previewImage} fluid />
 
-            <Button type="submit" primary fluid content="Crear" />
+            <Button
+                type="submit"
+                primary
+                fluid
+                content={category ? "Actualizar" : "Crear"}
+            />
         </Form>
     );
 }
 
-function initialValues() {
+function initialValues(data) {
     return {
-        title: "",
-        image: "",
-    }
-}
+      title: data?.title || "",
+      image: "",
+    };
+  }
 
 function newSchema() {
     return {
@@ -85,3 +88,10 @@ function newSchema() {
         image: Yup.string().required(true),
     }
 }
+
+function updateSchema() {
+    return {
+      title: Yup.string().required(true),
+      image: Yup.string(),
+    };
+  }
