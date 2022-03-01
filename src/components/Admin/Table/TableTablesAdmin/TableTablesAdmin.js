@@ -6,7 +6,7 @@ import "./TableTablesAdmin.scss";
 
 
 export function TableTablesAdmin(props) {
-    const {tables} = props;
+    const {tables, updateTable, deleteTable } = props;
 
     return (
         <>
@@ -21,7 +21,11 @@ export function TableTablesAdmin(props) {
                 {map(tables, (table, index) => (
                     <Table.Row key={index}>
                         <Table.Cell>{table.number}</Table.Cell>
-                        <Actions table={table}/>
+                        <Actions 
+                            table={table}
+                            updateTable={updateTable}
+                            deleteTable={deleteTable}
+                        />
 
 
                     </Table.Row>
@@ -36,18 +40,19 @@ export function TableTablesAdmin(props) {
 
 
 function Actions(props) {
-    const { table } = props;
+    const { table, updateTable, deleteTable } = props;
 
     return (
         <Table.Cell textAlign="right">
-            <Button icon onClick={() => console.log("Editar mesa")}>
+            <Button icon onClick={() => updateTable(table)}>
                 <Icon name="pencil" />
             </Button>
-            <Button icon negative onClick={() => console.log("Eliminar mesa")}>
+
+            <Button icon negative onClick={() => deleteTable(table)}>
                 <Icon name="close" />
             </Button>
 
 
         </Table.Cell>
-    )
+    );
 }
