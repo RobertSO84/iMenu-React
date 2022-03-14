@@ -1,27 +1,60 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import { Button, Icon, Checkbox } from "semantic-ui-react";
-import { map, size } from "lodash";
+import { map } from "lodash";
 import { TableAdmin } from "../TableAdmin";
 import "./TablesListAdmin.scss";
 
 export function TablesListAdmin(props) {
-    const { tables } = props;
+  const { tables } = props;
+  const [reload, setReload] = useState(false);
+  const [autoReload, setAutoReload] = useState(false);
 
-    return (
-        <div className="tables-list-admin">
-            <Button className="tables-list-admin__reload" primary icon onClick={() => console.log("reFresh")}>
-                <Icon name="refresh" />
-            </Button>
+  const onReload = () => setReload((prev) => !prev);
 
-            <div className="tables-list-admin__reload-toggle">
-                <span>Reload automatic</span>
-                <Checkbox toggle onChange={(_,data) => console.log(data.checked)}  />
+  // función recursiva, si fueran mas usuarios es recomendable otro método. (sockets).
+  useEffect(() => {
+    if (autoReload) {
+      const autoReloadAction = () => {
+        onReload();
+        setTimeout(() => {
+          autoReloadAction();
+        }, 5000);
+      };
+      autoReloadAction();
+    }
+  }, [autoReload]);
 
-            </div>
+  const onCheckAutoReload = (check) => {
+    if (check) {
+      setAutoReload(check);
+    } else {
+      window.location.reload();
+    }
+  };
 
-            { map(tables, (table) => (
-                <TableAdmin key={table.number} table={table} />
-            ))}
-        </div>
-    )
+  return (
+    <div className="tables-list-admin">
+      <Button
+        className="tables-list-admin__reload"
+        primary
+        icon
+        onClick={onReload}
+      >
+        <Icon name="refresh" />
+      </Button>
+
+      <div className="tables-list-admin__reload-toggle">
+        <span>Reload automatic</span>
+        <Checkbox
+          toggle
+          checked={autoReload}
+          onChange={(_, data) => onCheckAutoReload(data.checked)}
+        />
+      </div>
+
+      {map(tables, (table) => (
+        <TableAdmin key={table.number} table={table} reload={reload} />
+      ))}
+    </div>
+  );
 }

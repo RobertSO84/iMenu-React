@@ -9,7 +9,7 @@ import { ReactComponent as IcTable } from "../../../../assets/table4.svg";
 import "./TableAdmin.scss";
 
 export function TableAdmin(props) {
-    const { table } = props;
+    const { table, reload } = props;
     const [orders, setOrders] = useState([]);
     const [tableBusy, setTableBusy] = useState(false);
 
@@ -21,7 +21,7 @@ export function TableAdmin(props) {
             );
             setOrders(response);
         })();
-    }, []);
+    }, [reload]);
 
     useEffect(() => {
         (async () => {
@@ -33,7 +33,7 @@ export function TableAdmin(props) {
             else setTableBusy(false);
             
         })();
-    }, []);
+    }, [reload]);
 
 
 
