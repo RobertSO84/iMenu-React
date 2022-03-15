@@ -9,8 +9,6 @@ export function OrdersAdmin() {
 
     useEffect(() => getTables(), []);
 
-    console.log(tables);
-
     return (
         <>
             <HeaderPage title="Restaurante" />

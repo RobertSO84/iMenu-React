@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { Loader } from "semantic-ui-react";
+import { useParams } from "react-router-dom";
+import { HeaderPage } from "../../components/Admin";
+import { ListOrderAdmin } from "../../components/Admin/TableDetails"
+import { useOrder } from "../../hooks";
 
 export function TableDetailsAdmin() {
-    return (
-        <div>
-            <h2>Detalle de la mesa</h2>
-        </div>
-    )
+  const { id } = useParams();
+
+  const { loading, orders, getOrdersByTable } = useOrder();
+
+  useEffect(() => {
+    getOrdersByTable(id);
+  }, []);
+
+  console.log(orders);
+  return (
+    <>
+      <HeaderPage title={`Mesa ***`} />
+      {loading ? (
+        <Loader active inline="centered">
+          Cargando...
+        </Loader>
+      ) : (
+        <ListOrderAdmin orders={orders} />
+      )}
+    </>
+  );
 }
