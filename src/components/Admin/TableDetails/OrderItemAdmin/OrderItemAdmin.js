@@ -8,12 +8,13 @@ import "moment/locale/es";
 import "./OrderItemAdmin.scss";
 
 export function OrderItemAdmin(props) {
-    const { order } = props;
+    const { order, onReloadOrders } = props;
     const { title, image } = order.product_data;
     const { checkDeliveredOrder } = useOrder();
 
     const onCheckDeliveredOrder = async () => {
         await checkDeliveredOrder(order.id);
+        onReloadOrders();
     };
 
     return (
