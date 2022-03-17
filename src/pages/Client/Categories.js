@@ -9,7 +9,7 @@ export function Categories() {
 
   return (
     <div>
-      <h3>Categories</h3>
+      <h3>Categorías</h3>
       {loading ? (
         <p>Cargando...</p>
       ) : (

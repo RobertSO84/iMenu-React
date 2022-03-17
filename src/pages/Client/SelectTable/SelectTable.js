@@ -25,7 +25,7 @@ export function SelectTable() {
     <div className="select-table">
       <div className="select-table__content">
         <h1>Bienvenido a iMenu</h1>
-        <h2>Selecciona tu número mesa</h2>
+        <h2>Selecciona tu número de mesa</h2>
 
         <Form onSubmit={onSubmit}>
           <Form.Input
