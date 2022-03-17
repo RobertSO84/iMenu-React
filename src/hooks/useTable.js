@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { size } from "lodash";
 import {
   getTablesApi,
   addTableApi,
   updateTableApi,
   deleteTableApi,
   getTableApi,
+  getTableByNumberApi,
 } from "../api/table";
 import { useAuth } from "./";
 
@@ -63,12 +65,22 @@ export function useTable() {
 
   const getTable = async (idTable) => {
     try {
-        setLoading(true);
-        const response = await getTableApi(idTable);
-        setLoading(false);
-        setTable(response);
+      setLoading(true);
+      const response = await getTableApi(idTable);
+      setLoading(false);
+      setTable(response);
     } catch (error) {
       setLoading(false);
+      setError(error);
+    }
+  };
+
+  const isExistTable = async (tableNumber) => {
+    try {
+      const response = await getTableByNumberApi(tableNumber);
+      if (size(response) === 0) throw Error();
+      return true;
+    } catch (error) {
       setError(error);
     }
   };
@@ -83,5 +95,6 @@ export function useTable() {
     updateTable,
     deleteTable,
     getTable,
+    isExistTable,
   };
 }

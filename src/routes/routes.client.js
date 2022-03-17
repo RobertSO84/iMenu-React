@@ -1,15 +1,13 @@
-import { ClientLayout } from "../layouts";
-import { Home } from "../pages/Client";
-
+import { ClientLayout, BasicLayout } from "../layouts";
+import { SelectTable } from "../pages/Client";
 
 const routesClient = [
-    {
-        path: "/",
-        layout: ClientLayout,
-        component: Home,
-        exact: true,
-    },
-    
-]
+  {
+    path: "/",
+    layout: BasicLayout,
+    component: SelectTable,
+    exact: true,
+  },
+];
 
 export default routesClient;
