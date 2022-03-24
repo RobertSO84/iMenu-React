@@ -1,3 +1,32 @@
+# iMenu App
+
+This web app lets a restaurant create a digital menu and allows their customers to order directly from their mobile devices and ask for the bill.
+
+### Restaurant Customer Section
+
+1. Open the url where the web app is deployed (example: https://imenuroberto.netlify.app/) or use the QR.
+2. Enter with a valid table number (ex: from 1 to 5)
+3. Start adding products to the shopping cart.
+4. Access the shopping cart and delete or validate to place an order.
+5. You can view the history of your orders and its status, and ask for the bill.
+
+### Restaurant Administration Section
+
+1. Open the url and add /admin for the login page (example: https://imenuroberto.netlify.app/admin).
+2. Enter a valid email and password (example: andrea@example.com, password: 1234563). 
+3. The App allows you to add, modify and delete:
+  3.1 Users.
+  3.2 Categories.
+  3.3 Products.
+  3.4 Tables.
+4. The app allows the adminstrator to take orders from the tables, and check if the product is delivered or is pending.
+5. You can the generate the bill of the table and marked it as paid.
+6. Each table indicates pending orders to be delivered, or if they asked for the bill.
+
+## Find the backend repository here:
+https://github.com/RobertSO84/iMenu-django
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
